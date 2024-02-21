@@ -26,14 +26,15 @@ class SPM:  # Single Perceptron Model
         self.Z = random_arr(N, 1)
         self.Yh = random_arr(N, 1)
         self.e = random_arr(N, 1)
+
         self.Z = np.dot(X, self.w)
         self.Yh = sigmoid(self.Z)
         self.e = Y - self.Yh
         self.C = np.dot(self.e.transpose(), self.e)
 
-    # Backwards propagation methods
     def back_prop(self, X : np.ndarray, learning_rate : float):
-        w1 = self.w + learning_rate * np.dot(X.transpose(), (self.e * self.Yh * (1 - self.Yh)))
+        dw = -1 * np.dot(X.transpose(), (self.e * self.Yh * (1 - self.Yh)))
+        w1 = self.w - learning_rate * dw
         self.w = w1
     
     def train(self, X : np.ndarray, Y : np.ndarray, learning_rate : float) -> float:
